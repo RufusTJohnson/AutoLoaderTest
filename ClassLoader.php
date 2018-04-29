@@ -298,7 +298,7 @@ class ClassLoader
      * @param bool $prepend Whether to prepend the autoloader or not
      */
     public function register($prepend = false)
-    {echo("************* register");
+    {
         spl_autoload_register(array($this, 'loadClass'), true, $prepend);
     }
 
@@ -317,8 +317,8 @@ class ClassLoader
      * @return bool|null True if loaded, null otherwise
      */
     public function loadClass($class)
-    {echo("******************".$class);
-        if ($file = $this->findFile($class)) {echo("<br>FILEFOUND ******************".$file ."<br>");
+    {
+        if ($file = $this->findFile($class)) {
             includeFile($file);
 
             return true;
@@ -333,7 +333,7 @@ class ClassLoader
      * @return string|false The path if found, false otherwise
      */
     public function findFile($class)
-    { echo("<br>findFile ******************".$class."<br>");
+    { 
         // class map lookup
         if (isset($this->classMap[$class])) {
             return $this->classMap[$class];
@@ -368,19 +368,19 @@ class ClassLoader
     }
 
     private function findFileWithExtension($class, $ext)
-    {echo("<br>findFileWithExtension ******************".$class." $ext <br>");
+    {
         // PSR-4 lookup
         $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
 
-        $first = $class[0]; echo("<br><br>FUCK FIRST $first <br><br>");
+        $first = $class[0];
         if (isset($this->prefixLengthsPsr4[$first])) {
             $subPath = $class;
             while (false !== $lastPos = strrpos($subPath, '\\')) {
                 $subPath = substr($subPath, 0, $lastPos);
-                $search = $subPath.'\\';  echo("<br><br>FUCK SEARCH $search <br><br>");
+                $search = $subPath.'\\';
                 if (isset($this->prefixDirsPsr4[$search])) {
-                    $pathEnd = DIRECTORY_SEPARATOR . substr($logicalPathPsr4, $lastPos + 1);  echo("<br><br>FUCK PATHEND $pathEnd <br><br>");
-                    foreach ($this->prefixDirsPsr4[$search] as $dir) {echo("<br><br>prefix FUCK $dir ".$dir.$pathEnd." <br><br>");
+                    $pathEnd = DIRECTORY_SEPARATOR . substr($logicalPathPsr4, $lastPos + 1);  
+                    foreach ($this->prefixDirsPsr4[$search] as $dir) {
                         if (file_exists($file = $dir . $pathEnd)) {
                             return $file;
                         }
@@ -440,6 +440,6 @@ class ClassLoader
  * Prevents access to $this/self from included files.
  */
 function includeFile($file)
-{echo("******************".$file);
+{
     include $file;
 }

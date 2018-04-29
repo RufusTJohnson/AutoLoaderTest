@@ -1,4 +1,7 @@
 <?php
 namespace Users\Fred\Truck;
-class engine{}
+class engine extends \Users\Carpart
+{
+	
+}
 
